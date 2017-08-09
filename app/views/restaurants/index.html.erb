@@ -1,0 +1,22 @@
+<h1>List of Restaurants</h1>
+<%= link_to 'create a new restaurant', new_restaurant_path %>
+<% @restaurants.each do |r| %>
+  <div class="product">
+    <div class='product-upvote'>
+      <div class="product-arrow"></div>
+      <div class='product-count'><%= r.id %></div>
+    </div>
+    <div class='product-body'>
+      <h3><%= link_to r.name, restaurant_path(r) %></h3>
+      <p><%= r.address %></p>
+      <p><%= r.phone_number %></p>
+      <p><%= r.category %></p>
+    </div>
+    <ul class="list-inline product-controls hidden-sm hidden-xs">
+      <li><a href=""><i class="fa fa-heart"></i></a></li>
+      <li><a href=""><i class="fa fa-share"></i></a></li>
+      <li><a href=""><i class="fa fa-star"></i></a></li>
+    </ul>
+  </div>
+<% end %>
+<%= link_to 'create a new restaurant', new_restaurant_path %>
