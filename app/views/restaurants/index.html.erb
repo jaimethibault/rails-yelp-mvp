@@ -1,23 +1,51 @@
 <h1>List of Restaurants</h1>
-<%= link_to 'create a new restaurant', new_restaurant_path %>
+<%= link_to 'create a new restaurant', new_restaurant_path, class: "btn btn-danger btn-xs button-margin" %>
 <% @restaurants.each do |r| %>
   <div class="product">
+    <%= link_to "", restaurant_path(r), class: "listitem-link" %>
     <div class='product-upvote'>
-      <div class="product-arrow"></div>
-      <div class='product-count'><%= r.id %></div>
+      <div class='product-count'>
+      <% case r.category %>
+      <% when "french" %>
+        <p><%= "🇫🇷" %></p>
+      <% when "chinese" %>
+        <p><%= "🇨🇳" %></p>
+      <% when "japanese" %>
+        <p><%= "🇯🇵" %></p>
+      <% when "belgian" %>
+        <p><%= "🇧🇪" %></p>
+      <% when "italian" %>
+        <p><%= "🇮🇹" %></p>
+      <% end %>
+      </div>
     </div>
     <div class='product-body'>
       <h3><%= link_to r.name, restaurant_path(r) %></h3>
-      <p><%= r.address %></p>
-      <p><%= r.phone_number %></p>
-      <p><%= r.category %></p>
-      <p><%= r.avg_rating %></p>
+      <p><i class="fa fa-map-marker" aria-hidden="true"></i> <%= r.address %></p>
+      <p><i class="fa fa-phone" aria-hidden="true"></i> <%= r.phone_number %></p>
     </div>
     <ul class="list-inline product-controls hidden-sm hidden-xs">
-      <li><a href=""><i class="fa fa-heart"></i></a></li>
-      <li><a href=""><i class="fa fa-share"></i></a></li>
-      <li><a href=""><i class="fa fa-star"></i></a></li>
+      <% if r.avg_rating == "no rating yet" %>
+        <li></i> no rating yet</li>
+      <% else %>
+        <li>
+          <p><%= r.avg_rating %></p>
+          <% r.avg_rating.truncate.times do %>
+            <i class="fa fa-star" aria-hidden="true"></i>
+          <% end %>
+          <% if r.avg_rating - r.avg_rating.truncate > 0 %>
+            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+            <% (4-r.avg_rating.truncate).times do %>
+              <i class="fa fa-star-o" aria-hidden="true"></i>
+            <% end %>
+          <% else %>
+            <% (5-r.avg_rating.truncate).times do %>
+              <i class="fa fa-star-o" aria-hidden="true"></i>
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
     </ul>
   </div>
 <% end %>
-<%= link_to 'create a new restaurant', new_restaurant_path %>
+<%= link_to 'create a new restaurant', new_restaurant_path, class: "btn btn-danger btn-xs button-margin" %>

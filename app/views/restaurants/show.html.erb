@@ -1,15 +1,47 @@
+<%= link_to 'back to all restaurants', restaurants_path, class: "btn btn-default btn-xs button-margin" %>
 <h1><%= @restaurant.name %></h1>
-<ul>
-  <li><%= @restaurant.address %></li>
-  <li><%= @restaurant.phone_number %></li>
-  <li><%= @restaurant.category %></li>
-  <li><%= @restaurant.avg_rating %></li>
-</ul>
-<p>Reviews</p>
-<%= link_to 'create a new review', new_restaurant_review_path(@restaurant) %>
-<ul>
-  <% @restaurant.reviews.each do |r| %>
-    <li><%= "*" * r.rating %> <%= r.content %></li>
+<ul class="list-unstyled">
+  <li><i class="fa fa-map-marker" aria-hidden="true"></i> <%= @restaurant.address %></li>
+  <li><i class="fa fa-phone" aria-hidden="true"></i> <%= @restaurant.phone_number %></li>
+  <li><i class="fa fa-cutlery" aria-hidden="true"></i> <%= @restaurant.category %></li>
+  <% if @restaurant.avg_rating == "no rating yet" %>
+    <li><i class="fa fa-star-half-o" aria-hidden="true"></i> no rating yet - be the first to <%= link_to 'add a review', new_restaurant_review_path(@restaurant), class: "link-red" %></li>
+  <% else %>
+    <li>
+      <% @restaurant.avg_rating.truncate.times do %>
+        <i class="fa fa-star" aria-hidden="true"></i>
+      <% end %>
+      <% if @restaurant.avg_rating - @restaurant.avg_rating.truncate > 0 %>
+        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+        <% (4-@restaurant.avg_rating.truncate).times do %>
+          <i class="fa fa-star-o" aria-hidden="true"></i>
+        <% end %>
+      <% else %>
+        <% (5-@restaurant.avg_rating.truncate).times do %>
+          <i class="fa fa-star-o" aria-hidden="true"></i>
+        <% end %>
+      <% end %>
+    <%= @restaurant.avg_rating %>
+    </li>
   <% end %>
 </ul>
-<%= link_to 'back to all restaurants', restaurants_path %>
+<% if @restaurant.avg_rating == "no rating yet" %>
+<% else %>
+  <p>Reviews</p>
+  <ul class="list-unstyled reviews-small">
+    <% @restaurant.reviews.each do |r| %>
+      <li>
+        <% r.rating.times do %>
+          <i class="fa fa-star" aria-hidden="true"></i>
+        <% end %>
+        <% (5-r.rating).times do %>
+          <i class="fa fa-star-o" aria-hidden="true"></i>
+        <% end %>
+        <%= r.content %>
+      </li>
+    <% end %>
+  </ul>
+  <%= link_to 'create a new review', new_restaurant_review_path(@restaurant), class: "btn btn-danger btn-xs button-margin" %>
+<% end %>
+
+

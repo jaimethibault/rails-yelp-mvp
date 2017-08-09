@@ -4,6 +4,7 @@
   padding: 20px;
   border-radius: 3px;
   transition: all 0.15s ease;
+  position: relative;
 }
 
 /* Body design */
@@ -34,7 +35,7 @@
   text-align: center;
   transition: all 0.15s ease;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 36px;
   line-height: 20px;
 }
 .product-count {
@@ -94,4 +95,19 @@
 }
 .product-upvote:hover .product-arrow {
   border-bottom: 9px solid #5898f1;
+}
+
+.listitem-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  z-index: 2;
+  background: black;
+  opacity: 0;
+}
+
+.listitem-link:hover {
+  opacity: 0.1;
 }
